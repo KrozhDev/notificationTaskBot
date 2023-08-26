@@ -63,4 +63,14 @@ public class NotificationTask {
     public void setDate(LocalDateTime date) {
         this.datetime = date;
     }
+
+    @Override
+    public String toString() {
+        return "NotificationTask{" +
+                "id=" + id +
+                ", chatid=" + chatid +
+                ", message='" + message + '\'' +
+                ", datetime=" + datetime +
+                '}';
+    }
 }
