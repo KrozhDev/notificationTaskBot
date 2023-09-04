@@ -9,17 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pro.sky.telegrambot.models.NotificationTask;
 import pro.sky.telegrambot.service.NotificationTaskService;
 
 import javax.annotation.PostConstruct;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 
 @Service
@@ -53,7 +50,6 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
             }
 
             if (!text.equals("/start")){
-
                 Pattern pattern = Pattern.compile(("([0-9\\.\\:\\s]{16})(\\s)([\\W+]+)"));
                 Matcher matcher = pattern.matcher(text);
                 if (matcher.matches()) {
@@ -63,38 +59,9 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                     notificationTaskService.saveNotificationTask(date,task,chatId);
                     SendMessage message = new SendMessage(chatId, "Напомню о событии " + task + " в дату " + dateString);
                     SendResponse response = telegramBot.execute(message);
-
                 }
-
-
-
-
-
-
             }
-
-
-
-
-
-
-
-            // Process your updates here
         });
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
     }
-
-//    public void sendText(Long who, String what){
-//        SendMessage sm = SendMessage.builder()
-//                .chatId(who.toString()) //Who are we sending a message to
-//                .text(what).build();//Message content
-//        try {
-//            execute(sm);                        //Actually sending the message
-//        } catch (TelegramApiException e) {
-//            throw new RuntimeException(e);      //Any error will be printed here
-//        }
-//    }
-
-
-
 }
